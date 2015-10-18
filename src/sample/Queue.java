@@ -84,6 +84,7 @@ public class Queue<T>
            {
                result = first;
                first = first.getNext();
+               length--;
            }
         }
         catch (Exception e) {}
@@ -98,7 +99,7 @@ public class Queue<T>
             try {
                 throw new EmptyException();
             } catch (EmptyException e) {
-                e.printStackTrace();
+
             }
         while(current != null)
         {
@@ -107,5 +108,9 @@ public class Queue<T>
             current = current.getNext();
         }
         return result;
+    }
+
+    public int getLength() {
+        return length;
     }
 }
