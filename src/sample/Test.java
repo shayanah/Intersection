@@ -29,23 +29,23 @@ public class Test
         int a = 97;*/
       TraficFlow f = new TraficFlow(1);
       TraficFlow f2 = new TraficFlow(2);
-
-      f.calculateStopTime(f2,1000 * 10);
+      for(int i = 0; i < 2 ; i++ )
+      {
+        f.calculateStopTime(f2,1000 * 10);
+        Thread th = new Thread(f);
+        Thread th2 = new Thread(f2);
+        th.start();
+        th2.start();
+        th.join(); th2.join();
+      }
+      /*f.calculateStopTime(f2,1000 * 10);
       Thread t = new Thread(f);
       Thread t2 = new Thread(f2);
 
       t.start();
       t2.start();
       t.join();
-      t2.join();
-
-      f.calculateStopTime(f2,1000 * 10);
-      Thread th = new Thread(f);
-      Thread th2 = new Thread(f2);
-      th.start();
-      th2.start();
-      th.join(); th2.join();
-
+      t2.join();*/
       f.print(); f2.print();
 
     }

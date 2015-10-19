@@ -229,13 +229,13 @@ public class TraficFlow implements Runnable
                     timewatied= currentTime - temp1.getData().getTimeArival().getTime();
                     temp1.getData().setTimeWaited(new Time(timewatied));
                     temp1.getData().setTimePassed(new Time(currentTime));
+                    qResult.add( temp1 );
                 }
                 if(temp2 != null)
                 {
                     timewatied2 = currentTime - temp2.getData().getTimeArival().getTime();
                     temp2.getData().setTimeWaited(new Time(timewatied2));
                     temp2.getData().setTimePassed(new Time(currentTime));
-                    qResult.add( temp1 );
                     qResult.add( temp2 );
                 }
             }
@@ -263,7 +263,7 @@ public class TraficFlow implements Runnable
             if(now >= pre + 1000L )
             {
                 pre = now;
-                System.out.println("Lane " + lane + " open in " + remainToOpen/1000 );
+                System.out.println("Lane " + lane + " will open in " + remainToOpen/1000 );
                 //System.out.println("Lane " + lane + " open in " + open );
             }
         }
@@ -271,35 +271,6 @@ public class TraficFlow implements Runnable
         return pre;
     }
 
-    public void garbage()
-    {
-        /*int rArrival;
-        end = System.currentTimeMillis() + duration;
-        stopSign = System.currentTimeMillis() + duration/2;
-        a++;
-        while(System.currentTimeMillis() < end )
-        {
-            rArrival = randomGenerator.nextInt(2);
-            for(int i =0 ; i < rArrival; i++)
-            {
-                q.add(new Node<Car>( new Car(idGenerator(),nameGenerator(),new Time( System.currentTimeMillis() ) ) ) );
-                waitandGo(500L);
-            }
-
-            System.out.println(q);
-            waitandGo(500L);
-            if(intersectionOpen && System.currentTimeMillis() < stopSign)
-            {
-                q.dequeue();
-                q.dequeue();
-            }
-            if(System.currentTimeMillis() > stopSign )
-            {
-                intersectionOpen = false;
-                System.out.println("Stop Sign");
-            }
-        }*/
-    }
     @Override
     public synchronized void run()
     {
@@ -313,6 +284,6 @@ public class TraficFlow implements Runnable
     {
         while(!( q.isEmpty() )){ qResult.add( q.dequeue() );}
         System.out.println("Lane " + lane + " overview" + ": \n" + qResult);
-     
+
     }
 }
