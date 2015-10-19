@@ -3,7 +3,7 @@ package sample;
 /**
  * Created by shawn on 10/12/2015.
  */
-public class Queue<T>
+public class Queue<T> implements QueueMaster
 {
     private Node<T> first, rear;
     private int length;
@@ -20,7 +20,8 @@ public class Queue<T>
         else
            return false;
     }
-    public void add(Node<T> element)
+
+    public void add(Node element)
     {
         try
         {
@@ -43,6 +44,9 @@ public class Queue<T>
 
         }
     }
+
+
+
     public Node<T> dequeue()
     {
         Node<T> result = null;
