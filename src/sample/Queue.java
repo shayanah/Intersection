@@ -14,7 +14,7 @@ public class Queue<T>
         rear = null;
         length = 0;
     }
-    private boolean isEmpty(){
+    public boolean isEmpty(){
         if(first == null)
             return  true;
         else
@@ -22,12 +22,41 @@ public class Queue<T>
     }
     public void add(Node<T> element)
     {
-        if(isEmpty())
-            first = element;
-        else
-            rear.setNext(element);
-        rear = element;
-        length++;
+        try
+        {
+            if(isEmpty())
+            {
+                first = element;
+                rear = element;
+                length++;
+            }
+
+            else if(element != null)
+            {
+                rear.setNext(element);
+                rear = element;
+                length++;
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
+    }
+    public Node<T> dequeue()
+    {
+        Node<T> result = null;
+        try
+        {
+            if(first != null)
+            {
+                result = first;
+                first = first.getNext();
+                length--;
+            }
+        }
+        catch (Exception e) {}
+        return result;
     }
     public boolean remove(T data)
     {
@@ -75,21 +104,7 @@ public class Queue<T>
         return false;
     }
     public void enqueue(){}
-    public Node<T> dequeue()
-    {
-        Node<T> result = null;
-        try
-        {
-           if(first != null)
-           {
-               result = first;
-               first = first.getNext();
-               length--;
-           }
-        }
-        catch (Exception e) {}
-        return result;
-    }
+
 
     @Override
     public String toString() {

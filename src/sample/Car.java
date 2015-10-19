@@ -83,12 +83,15 @@ public class Car
 
     @Override
     public String toString() {
-        return "Car{" +
+        String result = "Car{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", timeArival=" + timeArival +
                 ", timePassed=" + timePassed +
-                ", timeWaited=" + timeWaited +
-                '}';
+                ", timeWaited=" + timeWaited ;
+        if(timeWaited != null)
+            result += " " + timeWaited.getMinutes() + " minutes, " + timeWaited.getSeconds() + " Seconds" ;
+        result += '}';
+        return result;
     }
 }

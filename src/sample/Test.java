@@ -31,7 +31,6 @@ public class Test
       TraficFlow f2 = new TraficFlow(2);
 
       f.calculateStopTime(f2,1000 * 10);
-      //f.calculateStopTime(1000 * 20);
       Thread t = new Thread(f);
       Thread t2 = new Thread(f2);
 
@@ -39,6 +38,7 @@ public class Test
       t2.start();
       t.join();
       t2.join();
+
       f.calculateStopTime(f2,1000 * 10);
       Thread th = new Thread(f);
       Thread th2 = new Thread(f2);
@@ -46,9 +46,7 @@ public class Test
       th2.start();
       th.join(); th2.join();
 
-      //f.runClock();
-
-
+      f.print(); f2.print();
 
     }
 }

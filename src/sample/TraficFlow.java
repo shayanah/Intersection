@@ -14,6 +14,7 @@ import java.util.Random;
 public class TraficFlow implements Runnable
 {
     private Queue<Car> q;
+    private Queue<Car> qResult;
     private long id;
     private Random randomGenerator;
     private char[] alfa = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p',
@@ -24,18 +25,21 @@ public class TraficFlow implements Runnable
     {
         id = 0;
         this.q = q;
+        qResult = new Queue<Car>();
         randomGenerator = new Random();
     }
     public TraficFlow()
     {
         id = 0;
         this.q = new Queue<Car>();
+        qResult = new Queue<Car>();
         randomGenerator = new Random();
     }
     public TraficFlow(int laneNumber)
     {
         id = 0;
         this.q = new Queue<Car>();
+        qResult = new Queue<Car>();
         randomGenerator = new Random();
         lane = laneNumber;
     }
@@ -209,18 +213,31 @@ public class TraficFlow implements Runnable
                 rArrival = randomGenerator.nextInt(2);
             for(int i =0 ; i < rArrival; i++)
             {
+                waitandGo(1000L);
                 q.add(new Node<Car>( new Car(idGenerator(),nameGenerator(),new Time( System.currentTimeMillis() ) ) ) );
-                waitandGo(500L);
             }
-
-
-
+            //waitandGo(500L);
             if(System.currentTimeMillis() < stopTime && System.currentTimeMillis() > startTime)
             {
                 System.out.println("Lane " + lane +": \n"+ q);
-                waitandGo(500L);
-                q.dequeue();
-                q.dequeue();
+                Node<Car> temp1 = q.dequeue();
+                Node<Car> temp2 = q.dequeue();
+                long currentTime = System.currentTimeMillis();
+                long timewatied,timewatied2;
+                if(temp1 != null)
+                {
+                    timewatied= currentTime - temp1.getData().getTimeArival().getTime();
+                    temp1.getData().setTimeWaited(new Time(timewatied));
+                    temp1.getData().setTimePassed(new Time(currentTime));
+                }
+                if(temp2 != null)
+                {
+                    timewatied2 = currentTime - temp2.getData().getTimeArival().getTime();
+                    temp2.getData().setTimeWaited(new Time(timewatied2));
+                    temp2.getData().setTimePassed(new Time(currentTime));
+                    qResult.add( temp1 );
+                    qResult.add( temp2 );
+                }
             }
             else
             {
@@ -291,5 +308,11 @@ public class TraficFlow implements Runnable
                 + duration + "\t" + q.getLength());
         addCarToIntersection();
 
+    }
+    public void print()
+    {
+        while(!( q.isEmpty() )){ qResult.add( q.dequeue() );}
+        System.out.println("Lane " + lane + " overview" + ": \n" + qResult);
+     
     }
 }
